@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentTrack – Career Insights</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+{% include 'navbar.html' %}
+
+<div class="max-w-6xl mx-auto py-10">
+
+    <h1 class="text-4xl font-bold text-center mb-10 text-blue-700">Career Insights Dashboard</h1>
+
+    <!-- DOMAIN DROPDOWN -->
+    <form method="POST" class="mb-10 text-center">
+        <label class="font-semibold text-lg">Select Domain:</label>
+        <select name="domain" class="p-2 border rounded ml-2">
+            {% for d in domain_list %}
+            <option value="{{ d }}" {% if d == domain_query %}selected{% endif %}>
+                {{ d }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <button class="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">
+            Update
+        </button>
+    </form>
+
+    <!-- Suggested Domain -->
+    <div class="bg-white shadow p-5 rounded-xl mb-10">
+        <h2 class="text-xl font-bold">Suggested Domain for You:</h2>
+        <p class="text-2xl font-semibold text-blue-700 mt-2">{{ suggested_domain }}</p>
+    </div>
+
+    <!-- CHARTS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+        <!-- Demand Trend -->
+        <div class="bg-white p-6 shadow rounded-xl">
+            <h3 class="text-lg font-semibold mb-4">Job Demand Trend (Next 6 Months)</h3>
+            <canvas id="demandChart"></canvas>
+        </div>
+
+        <!-- Salary Trend -->
+        <div class="bg-white p-6 shadow rounded-xl">
+            <h3 class="text-lg font-semibold mb-4">Average Salary Trend (LPA)</h3>
+            <canvas id="salaryChart"></canvas>
+        </div>
+
+        <!-- Skill Gap -->
+        <div class="bg-white p-6 shadow rounded-xl">
+            <h3 class="text-lg font-semibold mb-4">Skill Gap Analysis</h3>
+            <canvas id="gapChart"></canvas>
+        </div>
+
+        <!-- Domain Fit Radar -->
+        <div class="bg-white p-6 shadow rounded-xl">
+            <h3 class="text-lg font-semibold mb-4">Your Fit Across All Domains</h3>
+            <canvas id="radarChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- City chart -->
+    <div class="bg-white mt-10 p-6 shadow rounded-xl">
+        <h3 class="text-lg font-semibold mb-4">Top Hiring Cities</h3>
+        <canvas id="cityChart"></canvas>
+    </div>
+
+
+    <!-- ================= NEXT STEP NAVIGATION ================= -->
+    <div class="mt-12 flex flex-col md:flex-row gap-4 justify-center">
+
+        <!-- Go to Job Recommendations -->
+        <a href="/job_recommendations"
+           class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold text-center">
+            View Job Recommendations →
+        </a>
+
+        <!-- Back to Scoreboard -->
+        <a href="/upload_flow"
+           class="bg-white border px-8 py-3 rounded-lg text-lg font-semibold text-center">
+            ← Back to Scoreboard
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+    // CHARTS SCRIPT
+    const months = {{ months | tojson }};
+    const demandData = {{ demand_trend | tojson }};
+    const salaryData = {{ salary_trend | tojson }};
+    const gapData = {{ skill_gap | tojson }};
+    const radarLabels = {{ radar_labels | tojson }};
+    const radarValues = {{ radar_values | tojson }};
+    const cityLabels = {{ city_labels | tojson }};
+    const cityValues = {{ city_values | tojson }};
+
+    new Chart(document.getElementById('demandChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: "Demand %",
+                data: demandData,
+                borderColor: "blue",
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('salaryChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: "Salary (LPA)",
+                data: salaryData,
+                borderColor: "green",
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('gapChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ["Skills You Have", "Skills Missing"],
+            datasets: [{
+                data: gapData,
+                backgroundColor: ["#34d399", "#f87171"]
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: radarLabels,
+            datasets: [{
+                label: "Fit Score",
+                data: radarValues,
+                borderColor: "purple",
+                backgroundColor: "rgba(168, 85, 247, 0.2)"
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('cityChart'), {
+        type: 'bar',
+        data: {
+            labels: cityLabels,
+            datasets: [{
+                label: "Job Count",
+                data: cityValues,
+                backgroundColor: "orange"
+            }]
+        }
+    });
+
+</script>
+
+</body>
+</html>

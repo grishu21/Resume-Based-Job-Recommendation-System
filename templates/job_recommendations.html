@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Job Recommendations</title>
+</head>
+
+<body class="bg-gray-50 p-6">
+
+    <div class="max-w-5xl mx-auto bg-white p-6 shadow rounded">
+
+        <h2 class="text-3xl font-bold mb-6">Recommended Jobs</h2>
+
+        <!-- Recommended Section -->
+        <h3 class="text-xl font-semibold mb-3">AI-Recommended for You</h3>
+        {% for j in recommended %}
+            <div class="border p-4 rounded mb-4 bg-indigo-50">
+                <p class="font-bold">{{ j.title }} (Score: {{ j.score }})</p>
+                <p>{{ j.company }} — {{ j.city }}</p>
+                <a href="{{ j.link }}" target="_blank"
+                   class="text-indigo-700 underline">Apply Now</a>
+            </div>
+        {% endfor %}
+
+        <hr class="my-6">
+
+        <!-- All Jobs -->
+        <h3 class="text-xl font-semibold mb-3">All Jobs</h3>
+        {% for j in jobs %}
+            <div class="border p-4 rounded mb-4">
+                <p class="font-bold">{{ j.title }}</p>
+                <p>{{ j.company }} — {{ j.city }}</p>
+                <p class="text-sm text-gray-600">Salary: {{ j.salary }}</p>
+                <a href="{{ j.link }}" target="_blank"
+                   class="text-indigo-600 underline">Apply</a>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>

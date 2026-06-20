@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Recommendations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; color: #fff; }
+    .card { border-radius: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); }
+    .badge-skill { font-size: 0.9rem; padding: 8px 12px; margin: 4px; border-radius: 12px; }
+    .section-title { font-size: 1.3rem; margin-bottom: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center py-5">
+    <div class="card p-5 w-75">
+      <h2 class="mb-4 text-center">🎯 Final Results & Recommendations</h2>
+
+      <!-- Path Choice -->
+      <div class="mb-4">
+        <div class="section-title">🚀 Your Chosen Path</div>
+        <p class="fs-5"><span class="badge bg-light text-dark">{{ path_choice }}</span></p>
+      </div>
+
+      <!-- Technical Skills -->
+      <div class="mb-4">
+        <div class="section-title">💻 Technical Skills</div>
+        {% if tech_skills %}
+          {% for skill in tech_skills %}
+            <span class="badge bg-info text-dark badge-skill">{{ skill }}</span>
+          {% endfor %}
+        {% else %}
+          <p>No technical skills provided.</p>
+        {% endif %}
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="mb-4">
+        <div class="section-title">🤝 Soft Skills</div>
+        {% if soft_skills %}
+          {% for skill in soft_skills %}
+            <span class="badge bg-warning text-dark badge-skill">{{ skill }}</span>
+          {% endfor %}
+        {% else %}
+          <p>No soft skills provided.</p>
+        {% endif %}
+      </div>
+
+      <!-- Non-Technical Skills -->
+      <div class="mb-4">
+        <div class="section-title">🎨 Non-Technical Skills</div>
+        {% if non_tech_skills %}
+          {% for skill in non_tech_skills %}
+            <span class="badge bg-success badge-skill">{{ skill }}</span>
+          {% endfor %}
+        {% else %}
+          <p>No non-technical skills provided.</p>
+        {% endif %}
+      </div>
+
+      <!-- Job Recommendations -->
+      <div class="mb-4">
+        <div class="section-title">📌 Recommended Jobs</div>
+        <p class="fst-italic">Job recommendations will be shown here based on your chosen path and skills.</p>
+        <ul class="list-group text-dark">
+          <li class="list-group-item">🔹 Software Developer – Bangalore</li>
+          <li class="list-group-item">🔹 Data Analyst – Hyderabad</li>
+          <li class="list-group-item">🔹 Project Manager – Pune</li>
+          <li class="list-group-item">🔹 Graphic Designer – Remote</li>
+        </ul>
+      </div>
+
+      <!-- Back Button -->
+      <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-light btn-lg">⬅️ Start Over</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Interviews – TalentTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<!-- NAVBAR -->
+{% include "navbar.html" %}
+
+<div class="max-w-5xl mx-auto py-10">
+
+    <div class="flex justify-between items-center mb-10">
+        <h1 class="text-4xl font-bold text-blue-700 flex items-center gap-2">
+            📅 Your Interviews
+        </h1>
+
+        <!-- ADD INTERVIEW BUTTON -->
+        <button onclick="openModal()"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg font-semibold flex items-center gap-2">
+            <span>➕</span> Add Interview
+        </button>
+    </div>
+
+    <!-- ========== UPCOMING INTERVIEWS ========== -->
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Interviews</h2>
+
+    {% if upcoming %}
+        <div class="space-y-4">
+        {% for iv in upcoming %}
+            <div class="bg-white shadow-md p-5 rounded-xl flex justify-between items-center">
+
+                <!-- Interview Info -->
+                <div>
+                    <p class="text-xl font-bold">{{ iv.job_role }}</p>
+                    <p class="text-gray-600">{{ iv.company }}</p>
+                    <p class="text-gray-700 font-semibold mt-1">
+                        {{ iv.interview_datetime }}
+                    </p>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="flex gap-3">
+
+                    <!-- Reminder Now -->
+                    <form action="/send_reminder_now/{{ iv.id }}" method="POST">
+                        <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg"
+                                title="Send Reminder Now">
+                            🔔
+                        </button>
+                    </form>
+
+                    <!-- Send Feedback & Move -->
+                    <form action="/send_feedback_now/{{ iv.id }}" method="POST">
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg"
+                                title="Send Feedback">
+                            ✉️
+                        </button>
+                    </form>
+
+                    <!-- Delete Interview -->
+                    <form action="/delete_interview/{{ iv.id }}" method="POST"
+                          onsubmit="return confirm('Delete this interview?');">
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg"
+                                title="Delete Interview">
+                            🗑️
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        {% endfor %}
+        </div>
+
+    {% else %}
+        <p class="text-gray-500 ml-2">No upcoming interviews.</p>
+    {% endif %}
+
+    <!-- ========== HISTORY ========== -->
+    <h2 class="text-2xl font-semibold text-purple-700 mt-12 mb-4">Interview History</h2>
+
+    {% if history %}
+        <div class="space-y-4">
+        {% for iv in history %}
+            <div class="bg-gray-50 border p-5 rounded-xl flex justify-between items-center">
+
+                <div>
+                    <p class="text-xl font-bold">{{ iv.job_role }}</p>
+                    <p class="text-gray-600">{{ iv.company }}</p>
+                    <p class="text-gray-700 mt-1">
+                        {{ iv.interview_datetime }}
+                    </p>
+                    <p class="text-sm text-gray-500">Moved: {{ iv.moved_at }}</p>
+                </div>
+
+                <!-- Delete from history -->
+                <form action="/delete_history/{{ iv.id }}" method="POST"
+                      onsubmit="return confirm('Delete this history entry?');">
+                    <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg"
+                            title="Delete History">
+                        🗑️
+                    </button>
+                </form>
+
+            </div>
+        {% endfor %}
+        </div>
+
+    {% else %}
+        <p class="text-gray-500 ml-2">No interview history yet.</p>
+    {% endif %}
+</div>
+
+
+<!-- ====================================================== -->
+<!-- =============== ADD INTERVIEW MODAL ================== -->
+<!-- ====================================================== -->
+
+<div id="addModal"
+     class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+
+    <div class="bg-white w-96 p-6 rounded-xl shadow-xl">
+
+        <h2 class="text-2xl font-bold mb-4 text-blue-700">Add Interview</h2>
+
+        <form method="POST" action="/interviews">
+
+            <label class="font-semibold">Job Role</label>
+            <input name="job_role" required class="w-full p-2 border rounded mb-3">
+
+            <label class="font-semibold">Company</label>
+            <input name="company" required class="w-full p-2 border rounded mb-3">
+
+            <label class="font-semibold">Interview Date</label>
+            <input type="datetime-local" name="interview_datetime" required
+                   class="w-full p-2 border rounded mb-5">
+
+            <div class="flex justify-between">
+                <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded">
+                    Cancel
+                </button>
+
+                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
+                    Add Interview
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById("addModal").classList.remove("hidden");
+    }
+    function closeModal() {
+        document.getElementById("addModal").classList.add("hidden");
+    }
+</script>
+
+</body>
+</html>

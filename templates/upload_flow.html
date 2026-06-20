@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentTrack – Upload Flow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+{% include 'navbar.html' %}
+
+<div class="max-w-4xl mx-auto py-10">
+
+<!-- ======================================================== -->
+<!-- ======================= UPLOAD PAGE ===================== -->
+<!-- ======================================================== -->
+{% if section == "upload" %}
+<div class="bg-white shadow-lg rounded-xl p-8">
+
+    <h2 class="text-3xl font-bold mb-6">Upload Your Resume</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="/upload_flow">
+        <input type="hidden" name="step" value="upload_resume">
+
+        <label class="font-semibold">Full Name</label>
+        <input name="name" required class="w-full p-3 mt-1 mb-4 border rounded-lg">
+
+        <label class="font-semibold">Email Address</label>
+        <input name="email" type="email" required class="w-full p-3 mt-1 mb-4 border rounded-lg">
+
+        <label class="font-semibold">Upload Resume (.pdf or .docx)</label>
+        <input name="resume" type="file" required class="w-full p-3 mt-1 mb-6 border rounded-lg">
+
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition">
+            Upload & Continue
+        </button>
+    </form>
+</div>
+{% endif %}
+
+
+
+<!-- ======================================================== -->
+<!-- =================== SKILL EXTRACTION ==================== -->
+<!-- ======================================================== -->
+{% if section == "skills" %}
+<div class="bg-white shadow-lg rounded-xl p-8">
+
+    <h2 class="text-3xl font-bold mb-6">Extracted Skills</h2>
+
+    <!-- TECH SKILLS -->
+    <h3 class="text-xl font-semibold text-blue-700">Technical Skills</h3>
+    <div class="flex flex-wrap gap-2 mb-6">
+        {% for s in tech %}
+        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full">{{ s }}</span>
+        {% endfor %}
+        {% if not tech %}
+        <p class="text-gray-500">None detected</p>
+        {% endif %}
+    </div>
+
+    <!-- SOFT SKILLS -->
+    <h3 class="text-xl font-semibold text-purple-700">Soft Skills</h3>
+    <div class="flex flex-wrap gap-2 mb-6">
+        {% for s in soft %}
+        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full">{{ s }}</span>
+        {% endfor %}
+        {% if not soft %}
+        <p class="text-gray-500">None detected</p>
+        {% endif %}
+    </div>
+
+    <!-- NON-TECH SKILLS -->
+    <h3 class="text-xl font-semibold text-pink-700">Non-Technical Skills</h3>
+    <div class="flex flex-wrap gap-2 mb-6">
+        {% for s in nontech %}
+        <span class="px-3 py-1 bg-pink-100 text-pink-700 rounded-full">{{ s }}</span>
+        {% endfor %}
+        {% if not nontech %}
+        <p class="text-gray-500">None detected</p>
+        {% endif %}
+    </div>
+
+    <!-- Upload Proofs -->
+    <form method="POST" action="/upload_flow" enctype="multipart/form-data">
+        <input type="hidden" name="step" value="upload_proofs">
+
+        <h3 class="text-xl font-semibold mb-2">Upload Proofs</h3>
+
+        <label class="font-semibold">Technical Proofs</label>
+        <input type="file" name="proof_tech" multiple class="w-full p-3 border rounded-lg mb-4">
+
+        <label class="font-semibold">Non-Technical Proofs</label>
+        <input type="file" name="proof_nontech" multiple class="w-full p-3 border rounded-lg mb-6">
+
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold transition">
+            Continue →
+        </button>
+    </form>
+</div>
+{% endif %}
+
+
+
+<!-- ======================================================== -->
+<!-- ====================== SCOREBOARD ======================= -->
+<!-- ======================================================== -->
+{% if section == "scoreboard" %}
+<div class="p-8 bg-white shadow-lg rounded-xl">
+
+    <h2 class="text-3xl font-bold text-center mb-6">Your Skill Scoreboard</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="bg-blue-50 rounded-xl p-6 text-center">
+            <h3 class="text-xl font-semibold text-blue-700">Tech Score</h3>
+            <p class="text-5xl font-bold mt-3">{{ board.tech_score }}</p>
+            <p class="text-gray-600">{{ board.tech_pct }}%</p>
+        </div>
+
+        <div class="bg-purple-50 rounded-xl p-6 text-center">
+            <h3 class="text-xl font-semibold text-purple-700">Non-Tech Score</h3>
+            <p class="text-5xl font-bold mt-3">{{ board.nontech_score }}</p>
+            <p class="text-gray-600">{{ board.nontech_pct }}%</p>
+        </div>
+
+    </div>
+
+    <p class="text-center mt-4 text-lg">
+        Dominant Profile:
+        <b class="text-blue-700">{{ board.dominant }}</b>
+    </p>
+
+    <hr class="my-10">
+
+    <!-- WHAT NEXT -->
+    <h3 class="text-xl font-bold mb-4 text-center">What would you like to do next?</h3>
+
+    <div class="flex flex-col md:flex-row justify-center gap-6 mb-10">
+
+        <a href="/dashboard"
+           class="px-10 py-4 rounded-xl bg-blue-600 text-white text-lg font-semibold shadow hover:bg-blue-700 transition">
+            View Career Insights →
+        </a>
+
+        <button type="button"
+                onclick="document.getElementById('jobBox').classList.remove('hidden')"
+                class="px-10 py-4 rounded-xl bg-purple-600 text-white text-lg font-semibold shadow hover:bg-purple-700 transition">
+            Job Recommendations →
+        </button>
+
+        <a href="/upload_flow"
+           class="px-10 py-4 rounded-xl bg-gray-200 text-lg font-semibold shadow hover:bg-gray-300 transition">
+            ← Back
+        </a>
+    </div>
+
+    <!-- JOB CATEGORY (Hidden until clicked) -->
+    <div id="jobBox" class="hidden">
+
+        <h3 class="text-xl font-semibold mb-3">Choose Job Category</h3>
+
+        <form method="POST" action="/upload_flow">
+            <input type="hidden" name="step" value="job_type">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <label class="cursor-pointer">
+                    <input type="radio" name="track_choice" value="Tech" class="hidden peer" required>
+                    <div class="p-4 border rounded-xl bg-blue-50 peer-checked:ring-2 peer-checked:ring-blue-500">
+                        <h4 class="font-semibold text-blue-700">Tech Jobs</h4>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" name="track_choice" value="Non-Tech" class="hidden peer">
+                    <div class="p-4 border rounded-xl bg-purple-50 peer-checked:ring-2 peer-checked:ring-purple-500">
+                        <h4 class="font-semibold text-purple-700">Non-Tech Jobs</h4>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" name="track_choice" value="Both" class="hidden peer">
+                    <div class="p-4 border rounded-xl bg-gray-100 peer-checked:ring-2 peer-checked:ring-gray-800">
+                        <h4 class="font-semibold text-gray-800">Both</h4>
+                    </div>
+                </label>
+
+            </div>
+
+            <button class="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+                Continue →
+            </button>
+
+        </form>
+    </div>
+
+</div>
+{% endif %}
+
+
+
+<!-- ======================================================== -->
+<!-- ====================== MODE SELECT ======================= -->
+<!-- ======================================================== -->
+{% if section == "mode" %}
+<div class="p-8 bg-white shadow-lg rounded-xl">
+
+    <h2 class="text-3xl font-bold text-center mb-6">Choose Search Mode</h2>
+
+    <form method="POST" action="/upload_flow">
+        <input type="hidden" name="step" value="choose_mode">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Core -->
+            <label>
+                <input type="radio" name="mode" value="Core" class="hidden peer" required>
+
+                <div class="p-6 border rounded-xl peer-checked:ring-2 peer-checked:ring-blue-500">
+                    <h3 class="font-bold mb-2">Core Mode</h3>
+                    <p>Select ONE mastered skill</p>
+
+                    <select name="mastered_skill" class="w-full p-2 mt-2 border rounded">
+                        {% for s in tech %}
+                        <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </label>
+
+            <!-- General -->
+            <label>
+                <input type="radio" name="mode" value="General" class="hidden peer">
+
+                <div class="p-6 border rounded-xl peer-checked:ring-2 peer-checked:ring-purple-500">
+                    <h3 class="font-bold mb-2">General Mode</h3>
+                    <p>Select MULTIPLE skills</p>
+
+                    <div class="h-40 overflow-y-scroll p-3 border rounded bg-gray-50">
+                        {% for s in tech + soft + nontech %}
+                        <label class="flex gap-2 my-1">
+                            <input type="checkbox" name="selected_skills" value="{{ s }}">
+                            {{ s }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </label>
+
+        </div>
+
+        <button class="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+            Continue →
+        </button>
+
+    </form>
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>

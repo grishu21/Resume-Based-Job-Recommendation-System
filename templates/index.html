@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerPath – Smart Job Finder</title>
+
+    <!-- Proper Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Prevent browser caching issues -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-indigo-700 flex items-center gap-2">
+            <img src="https://cdn-icons-png.flaticon.com/512/3076/3076197.png" class="w-8 h-8">
+            CareerPath
+        </h1>
+
+        <div>
+            <a href="/login" class="text-gray-700 px-4">Sign In</a>
+            <a href="/upload" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="text-center mt-20 px-4">
+        <span class="text-sm bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">✨ AI-Powered Job Matching</span>
+
+        <h2 class="text-5xl font-extrabold mt-5 leading-tight">
+            Find Your Perfect<br>
+            <span class="text-indigo-700">Career Match</span>
+        </h2>
+
+        <p class="text-gray-500 mt-4 text-lg">
+            Upload your resume, discover tailored job opportunities,<br>
+            and schedule interviews — all in one intelligent platform.
+        </p>
+
+        <div class="mt-8">
+            <a href="/upload" class="bg-indigo-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-indigo-700">Start Your Journey</a>
+            <a href="/login" class="ml-4 border px-6 py-3 rounded-xl text-lg hover:bg-gray-100">Sign In</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="mt-20 grid md:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Smart Matching</h3>
+            <p class="mt-2 text-gray-500">
+                Our AI analyzes your resume and matches you with jobs that fit your skills perfectly.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Easy Scheduling</h3>
+            <p class="mt-2 text-gray-500">
+                Manage all your interviews with automated reminders and tracking.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Career Growth</h3>
+            <p class="mt-2 text-gray-500">
+                Track your progress and maintain a clear record of applications and interviews.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-6 bg-gray-900 text-center text-white">
+        © 2025 CareerPath. All rights reserved.
+    </footer>
+
+</body>
+</html>

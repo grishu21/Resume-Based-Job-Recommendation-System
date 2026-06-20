@@ -1,0 +1,92 @@
+<!-- NAVBAR (TalentTrack Style) -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <!-- LOGO -->
+        <h1 class="text-2xl font-bold tracking-wide text-gray-900">
+            TalentTrack
+        </h1>
+
+        <!-- NAV LINKS -->
+        <div class="hidden md:flex gap-8 text-lg">
+
+            <a href="/" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Home
+            </a>
+
+            <a href="/upload_flow" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Upload Resume
+            </a>
+
+            <a href="/job_recommendations" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Jobs
+            </a>
+
+            <a href="/applied_jobs" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Applied Jobs
+            </a>
+
+            <a href="/interviews" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Interviews
+            </a>
+
+            <a href="/dashboard" 
+               class="text-gray-700 hover:text-blue-600 transition font-medium">
+               Insights
+            </a>
+
+        </div>
+
+        <!-- MOBILE MENU BUTTON -->
+        <button onclick="toggleMenu()" class="md:hidden text-gray-700 text-3xl">
+            ☰
+        </button>
+    </div>
+
+    <!-- MOBILE NAV MENU -->
+    <div id="mobileMenu" class="hidden bg-white md:hidden px-6 pb-4">
+
+        <a href="/" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Home
+        </a>
+
+        <a href="/upload_flow" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Upload Resume
+        </a>
+
+        <a href="/job_recommendations" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Jobs
+        </a>
+
+        <a href="/applied_jobs" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Applied Jobs
+        </a>
+
+        <a href="/interviews" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Interviews
+        </a>
+
+        <a href="/dashboard" 
+           class="block py-2 text-gray-700 hover:text-blue-600 transition font-medium">
+           Insights
+        </a>
+
+    </div>
+</nav>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("hidden");
+}
+</script>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TalentTrack - Applied Jobs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    {% include 'navbar.html' %}
+
+
+<!-- HEADER -->
+<header class="w-full py-5 bg-white shadow-sm">
+    <h1 class="text-3xl font-bold text-center tracking-wide">TalentTrack</h1>
+</header>
+
+<div class="max-w-5xl mx-auto mt-12">
+
+    <!-- PAGE TITLE -->
+    <h2 class="text-3xl font-bold text-center mb-2">Applied Jobs</h2>
+    <p class="text-center text-gray-600 mb-10">
+        All jobs you’ve applied for are displayed here.
+    </p>
+
+    <!-- APPLIED JOBS LIST -->
+    <div class="bg-white p-8 rounded-xl shadow">
+
+        {% if jobs %}
+            <div class="space-y-6">
+
+                {% for j in jobs %}
+                <div class="p-6 bg-gray-100 border rounded-xl shadow-sm">
+
+                    <!-- JOB HEADER -->
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">{{ j.job_title }}</h3>
+                            <p class="text-gray-700">{{ j.company }}</p>
+                        </div>
+
+                        <!-- STATUS BADGE -->
+                        {% set current = j.interview_date %}
+                        {% if not current or current == '' %}
+                            <span class="px-4 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">
+                                Applied
+                            </span>
+                        {% else %}
+                            {% set now = current %}
+                            <span class="px-4 py-1 bg-green-100 text-green-700 rounded-full font-semibold">
+                                Interview Scheduled
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- INTERVIEW DATE -->
+                    {% if j.interview_date %}
+                    <p class="mt-2 text-gray-600 text-sm">
+                        📅 Interview: {{ j.interview_date }}
+                    </p>
+                    {% endif %}
+
+                    <!-- BUTTONS -->
+                    <div class="mt-4 flex gap-4">
+                        <a href="{{ j.link }}" target="_blank"
+                           class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700">
+                            Open Job Page →
+                        </a>
+
+                        <form method="POST" action="/delete_applied_job">
+                            <input type="hidden" name="index" value="{{ loop.index0 }}">
+                            <button class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+            <p class="text-center text-gray-500 text-lg">You haven't applied to any jobs yet.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="mt-20 py-6 text-center text-gray-500">
+    © 2025 TalentTrack — All Rights Reserved
+</footer>
+
+</body>
+</html>

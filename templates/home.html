@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TalentTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    {% include 'navbar.html' %}
+
+    <!-- HEADER -->
+    <header class="w-full py-5 bg-white shadow-sm">
+        <h1 class="text-3xl font-bold text-center tracking-wide text-gray-900">
+            TalentTrack
+        </h1>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="max-w-4xl mx-auto text-center mt-12">
+        <h2 class="text-4xl font-extrabold mb-4">
+            Your AI-Powered Job Recommendation 
+        </h2>
+
+        <p class="text-lg text-gray-600 leading-relaxed">
+            Upload your resume, explore job matches, track interviews,  
+            and grow your career with intelligent skill insights.
+        </p>
+
+        <a href="/upload_flow"
+           class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+            Get Started
+        </a>
+    </section>
+
+    <!-- THREE MAIN OPTIONS (Lovable Style) -->
+    <section class="max-w-6xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+
+        <!-- JOB FINDER -->
+        <div class="bg-white shadow-lg p-8 rounded-2xl hover:shadow-2xl transition cursor-pointer"
+             onclick="window.location='/upload_flow'">
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">🔍 Job Finder</h3>
+            <p class="text-gray-600 mb-4">
+                Upload your resume → extract skills → choose mode → get perfectly matched jobs.
+            </p>
+            <a href="/upload_flow" class="text-blue-600 font-semibold hover:underline">
+                Explore Jobs →
+            </a>
+        </div>
+
+        <!-- INTERVIEW MANAGER -->
+        <div class="bg-white shadow-lg p-8 rounded-2xl hover:shadow-2xl transition cursor-pointer"
+             onclick="window.location='/interviews'">
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">📅 Interview Manager</h3>
+            <p class="text-gray-600 mb-4">
+                Schedule interviews, track upcoming dates, view history, and manage your job progress.
+            </p>
+            <a href="/interviews" class="text-blue-600 font-semibold hover:underline">
+                Manage Interviews →
+            </a>
+        </div>
+
+        <!-- CAREER INSIGHTS -->
+        <div class="bg-white shadow-lg p-8 rounded-2xl hover:shadow-2xl transition cursor-pointer"
+             onclick="window.location='/dashboard'">
+            <h3 class="text-2xl font-bold mb-2 text-gray-900">📈 Career Insights</h3>
+            <p class="text-gray-600 mb-4">
+                View skill gaps, salary predictions, job demand trends, and personalized AI insights.
+            </p>
+            <a href="/dashboard" class="text-blue-600 font-semibold hover:underline">
+                View Insights →
+            </a>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-20 py-6 text-center text-gray-500">
+        © 2025 TalentTrack — All Rights Reserved
+    </footer>
+
+</body>
+</html>
